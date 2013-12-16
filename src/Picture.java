@@ -137,9 +137,12 @@ public final class Picture implements ActionListener {
             JMenu file = new JMenu("File");
             JMenu filters = new JMenu("Filters");
             JMenu other = new JMenu("Others");
+            JMenu online = new JMenu("Online");
             menuBar.add(file);
             menuBar.add(filters);
             menuBar.add(other);
+            menuBar.add(online);
+            
                     
             JMenuItem save = new JMenuItem(" Save...   ");
             JMenuItem open = new JMenuItem(" Open..");
@@ -150,6 +153,7 @@ public final class Picture implements ActionListener {
             JMenuItem saturateH = new JMenuItem("Saturate High");
             JMenuItem saturateL = new JMenuItem("Saturate Low");
             JMenuItem border = new JMenuItem("Border");
+            JMenuItem twitter = new JMenuItem("Post to Twitter");
 
             save.addActionListener(this);
             
@@ -168,6 +172,20 @@ public final class Picture implements ActionListener {
             filters.add(saturateH);
             filters.add(saturateL);
             other.add(border);
+            online.add(twitter);
+            twitter.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+			        try {
+			        	TwitBot twit = new TwitBot();
+			        	twit.deploy();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+            	
+            });
             border.addActionListener(new ActionListener(){
 
 				@Override

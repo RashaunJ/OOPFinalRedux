@@ -178,14 +178,14 @@ public final class Picture implements ActionListener {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 			        try {
-			        	TwitBot twit = new TwitBot();
-			        	twit.deploy();
+			        	NamexTweet twit;
+			        	
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
             	
-            });
+            });	
             border.addActionListener(new ActionListener(){
 
 				@Override

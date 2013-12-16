@@ -31,22 +31,7 @@ public final class Main implements ActionListener {
     private boolean isOriginUpperLeft = true;  // location of origin
     private final int width, height;           // width and height
 
-   /**
-     * Initializes a blank <tt>w</tt>-by-<tt>h</tt> picture, where each pixel is black.
-     */
-    public Main(int w, int h) {
-        if (w < 0) throw new IllegalArgumentException("width must be nonnegative");
-        if (h < 0) throw new IllegalArgumentException("height must be nonnegative");
-        width = w;
-        height = h;
-        image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-        // set to TYPE_INT_ARGB to support transparency
-        filename = w + "-by-" + h;
-    }
-
-   /**
-     * Initializes a new picture that is a deep copy of <tt>pic</tt>.
-     */
+  
     public Main(Main pic) {
         width = pic.width();
         height = pic.height();
@@ -185,7 +170,7 @@ public final class Main implements ActionListener {
 			        if (chooser.getFile() != null) {
 			        	try {
 			        		System.out.print(chooser.getDirectory()+chooser.getFile());
-							NamexTweet.start(chooser.getDirectory()+chooser.getFile());
+							TwitBot.start(chooser.getDirectory()+chooser.getFile());
 						} catch (TwitterException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -323,9 +308,7 @@ public final class Main implements ActionListener {
         return width;
     }
 
-   /**
-     * Returns the color of pixel (<em>x</em>, <em>y</em>).
-     */
+ 
     public Color get(int x, int y) {
         if (x < 0 || x >= width())  throw new IndexOutOfBoundsException("x must be between 0 and " + (width()-1));
         if (y < 0 || y >= height()) throw new IndexOutOfBoundsException("y must be between 0 and " + (height()-1));
@@ -333,9 +316,7 @@ public final class Main implements ActionListener {
         else                   return new Color(image.getRGB(x, height - y - 1));
     }
 
-   /**
-     * Sets the color of pixel (<em>x</em>, <em>y</em>) to given color.
-     */
+
     public void set(int x, int y, Color color) {
         if (x < 0 || x >= width())  throw new IndexOutOfBoundsException("x must be between 0 and " + (width()-1));
         if (y < 0 || y >= height()) throw new IndexOutOfBoundsException("y must be between 0 and " + (height()-1));
@@ -344,9 +325,6 @@ public final class Main implements ActionListener {
         else                   image.setRGB(x, height - y - 1, color.getRGB());
     }
 
-   /**
-     * Is this Picture equal to obj?
-     */
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null) return false;
@@ -369,9 +347,7 @@ public final class Main implements ActionListener {
         save(new File(name));
     }
 
-   /**
-     * Saves the picture to a file in a standard image format.
-     */
+ //Save picture
     public void save(File file) {
         this.filename = file.getName();
         if (frame != null) { frame.setTitle(filename); }
@@ -391,9 +367,7 @@ public final class Main implements ActionListener {
     	pic.show();
     	 	  	
     }
-   /**
-     * Opens a save dialog box when the user selects "Save As" from the menu.
-     */
+    //Default save dialog
     public void actionPerformed(ActionEvent e) {
         FileDialog chooser = new FileDialog(frame,
                              "Use a .png or .jpg extension", FileDialog.SAVE);
@@ -404,10 +378,6 @@ public final class Main implements ActionListener {
     }
 
 
-   /**
-     * Tests this <tt>Picture</tt> data type. Reads a picture specified by the command-line argument,
-     * and shows it in a window on the screen.
-     */
     public static void main(String[] args) {
         Main pic = new Main("default.jpg");
         System.out.printf("%d-by-%d\n", pic.width(), pic.height());

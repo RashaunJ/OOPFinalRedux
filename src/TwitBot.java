@@ -11,7 +11,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
-public class NamexTweet {
+public class TwitBot {
     private final static String CONSUMER_KEY = "LklP26VHolgFFDo4sfENWA";
     private final static String CONSUMER_KEY_SECRET = "k0Hk1IForprskG6orwQJYSiHltI8ahyA1tmYYNdc7SQ";
  public static void start(String filepath) throws TwitterException, IOException {

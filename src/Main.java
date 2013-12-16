@@ -20,9 +20,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import twitter4j.TwitterException;
 
 
-public final class Picture implements ActionListener {
+
+public final class Main implements ActionListener {
     private BufferedImage image;               // the rasterized image
     private JFrame frame;                      // on-screen view
     private String filename;                   // name of file
@@ -32,7 +34,7 @@ public final class Picture implements ActionListener {
    /**
      * Initializes a blank <tt>w</tt>-by-<tt>h</tt> picture, where each pixel is black.
      */
-    public Picture(int w, int h) {
+    public Main(int w, int h) {
         if (w < 0) throw new IllegalArgumentException("width must be nonnegative");
         if (h < 0) throw new IllegalArgumentException("height must be nonnegative");
         width = w;
@@ -45,7 +47,7 @@ public final class Picture implements ActionListener {
    /**
      * Initializes a new picture that is a deep copy of <tt>pic</tt>.
      */
-    public Picture(Picture pic) {
+    public Main(Main pic) {
         width = pic.width();
         height = pic.height();
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -59,7 +61,7 @@ public final class Picture implements ActionListener {
      * Initializes a picture by reading in a .png, .gif, or .jpg from
      * the given filename or URL name.
      */
-    public Picture(String filename) {
+    public Main(String filename) {
         this.filename = filename;
         try {
             // try to read from file in working directory
@@ -86,7 +88,7 @@ public final class Picture implements ActionListener {
    /**
      * Initializes a picture by reading in a .png, .gif, or .jpg from a File.
      */
-    public Picture(File file) {
+    public Main(File file) {
         try { image = ImageIO.read(file); }
         catch (IOException e) {
             e.printStackTrace();
@@ -177,15 +179,25 @@ public final class Picture implements ActionListener {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-			        try {
-			        	NamexTweet twit;
-			        	
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+			        FileDialog chooser = new FileDialog(frame,
+                    "Use a .png or .jpg extension", FileDialog.LOAD);
+			        chooser.setVisible(true);
+			        if (chooser.getFile() != null) {
+			        	try {
+			        		System.out.print(chooser.getDirectory()+chooser.getFile());
+							NamexTweet.start(chooser.getDirectory()+chooser.getFile());
+						} catch (TwitterException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        	}
 				}
             	
-            });	
+            });
+
             border.addActionListener(new ActionListener(){
 
 				@Override
@@ -339,7 +351,7 @@ public final class Picture implements ActionListener {
         if (obj == this) return true;
         if (obj == null) return false;
         if (obj.getClass() != this.getClass()) return false;
-        Picture that = (Picture) obj;
+        Main that = (Main) obj;
         if (this.width()  != that.width())  return false;
         if (this.height() != that.height()) return false;
         for (int x = 0; x < width(); x++)
@@ -375,7 +387,7 @@ public final class Picture implements ActionListener {
     }
     public void open(String name){
     	System.out.println(name);
-    	Picture pic = new Picture(name);
+    	Main pic = new Main(name);
     	pic.show();
     	 	  	
     }
@@ -397,7 +409,7 @@ public final class Picture implements ActionListener {
      * and shows it in a window on the screen.
      */
     public static void main(String[] args) {
-        Picture pic = new Picture("default.jpg");
+        Main pic = new Main("default.jpg");
         System.out.printf("%d-by-%d\n", pic.width(), pic.height());
         pic.show();
     }
